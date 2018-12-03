@@ -1,0 +1,55 @@
+
+<article class="grid-article">
+	<div class="horizontal-label"><p>Servers</p></div>
+	<div class="vertical-label"><p>Processes</p></div>
+	<div class="grid-parent" >
+			<div class="grid-header first-nocolor"></div>
+			<div class="grid-header" *ngFor="let server of data.servers">{{server | uppercase}}</div>
+	</div>
+	<div class="grid-parent" *ngFor="let plist of data.server_status">
+		<div class="grid-child first-nocolor">{{plist.process | uppercase}}</div>
+		<div *ngFor="let s of plist.servers" class="grid-child  {{isValidGrid(s.valid)}}" 
+			(click)="gotoDetail(plist.process, s.server)" >
+			<div class="server-status {{s.pstatus}}"><img class="imgborder" title="Leader Server" *ngIf="s.role==='master'" src="/assets/img/{{getServerRole(s.role)}}.png"/>  {{s.pstatus | uppercase}}</div>
+			<div class="server-status-details" *ngIf="s.scanned && s.processed">Process {{serverScannedPerSec(s.scanned)}}/sec 
+				({{getPercentage(s.scanned, s.processed)}}%)</div>
+		</div>
+	</div>
+	Click on a box above to see details
+</article>
+
+<article *ngIf="showDetails ; else elseBlock">
+	<div class="grid-details-parent">
+		<div class="details-header">
+			<div><h3>{{selected.process | uppercase}} <span class="{{details.pstatus}}"> {{details.pstatus | uppercase}} </span></h3>
+				
+			</div>
+			<div>running on <strong>{{selected.server | uppercase}}<img class="imgborder" title="Leader Server" *ngIf="details.role==='master'" src="/assets/img/{{getServerRole(details.role)}}.png"/></strong>
+				<button type="button" class="btn btn-link"  href="#" ><i class="icon-off"></i>View Logs</button></div>
+		</div>
+		<div>
+			<!--div class="details">				
+				<div>
+					<button type="button" class="btn btn-link" ><i class="icon-off"></i>View Log</button></div>
+			</div-->
+			<div class="grid-kpi-parent">
+				<div class="first-nomargin grey-kpi-box"><div class="kpi">{{serverScannedPerSec(details.scanned)}} </div>Scanned/s</div>
+				<div class="grey-kpi-box"><div class="kpi">{{serverScannedPerSec(details.processed)}}</div>Processed/s</div>
+				<div class="grey-kpi-box"><div class="kpi">{{details.scanned | number}}</div>Scanned</div>
+				<div class="grey-kpi-box"><div class="kpi">{{details.processed | number}} ({{getPercentage(details.scanned, details.processed)}}%)</div>Processed</div>
+				<div class="grey-kpi-box"><div class="kpi">{{details.queue | number}} ({{getPercentage(details.scanned, details.queue)}}%)</div> In Queue</div>
+			</div>
+		</div>
+		<div class="details-header">
+			<div class="strong"><h3>Process In Last 24 Hours</h3>                    
+			</div>
+		</div>
+		<div class="details-trend">
+			<!--span *ngFor="let dp of details.trend">[{{dp.time}}: 
+				{{dp.scanned}} | {{dp.processed}} | {{dp.queue}}] </span-->			
+			<app-barchart *ngIf="chartData" [data]="chartData"></app-barchart>
+		</div>
+	</div>
+</article>
+
+<ng-template #elseBlock><div class="message-box">Select a server to see details</div></ng-template>

@@ -1,0 +1,16 @@
+<article class="grid-article">
+    
+    <!--div class="details-header">
+        <div><h3>License</h3></div>
+    </div-->
+
+    
+    <div class="grid-parent">
+        <div class="grid-kpi-parent" *ngFor="let process of processes">
+            <div class="grey-kpi-box">{{process.process | uppercase}}</div>
+            <div class="grey-kpi-box"><span class="{{process.status}}">{{process.status | uppercase}}</span><br>Expiration Date: {{process.expireOn}}</div>
+        </div>
+    </div>       
+        
+   
+</article>

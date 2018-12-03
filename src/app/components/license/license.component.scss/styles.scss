@@ -1,0 +1,39 @@
+@import '~sass/styles';
+.grid-article{
+    padding:30px;
+}
+.grid-kpi-parent {
+    @include display-grid;
+    -ms-grid-columns: 1fr 1fr 1fr;
+    -ms-grid-rows: 100px 100px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: 70px;
+    padding-top: 0px;
+    max-width: 400px;
+    margin: 0px auto;
+} 
+.grid-kpi-parent :first-child{ 
+    text-align: right;
+    //border-right: 1px solid #efefef;
+    padding-top:10px;
+    font-weight: bolder;
+}
+.grey-kpi-box{
+    @include basic-styles;
+    flex-wrap: wrap;
+    margin: 0px;
+    padding: 10px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #efefef;
+    color: $kpi-title-color;
+    font-size: 90%;
+    text-align: left;
+    display: block;
+    font-weight: lighter;
+}
+.active{
+    color: $active-color;
+    text-align: left;
+    border: 0px solid #fff;
+    font-weight: bolder;
+}

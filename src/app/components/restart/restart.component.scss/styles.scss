@@ -1,0 +1,18 @@
+.grid-article{
+    width:80%;
+    max-width: 500px;
+    margin: 20px auto;
+    border:1px solid grey;
+    padding:10px;
+    border-radius: 5px;
+}
+.grid-form{
+    width:200px;
+    margin: 20px auto;    
+}
+.grid-form > div{
+    padding:5px;
+}
+#pwd{
+    width:80px;
+}

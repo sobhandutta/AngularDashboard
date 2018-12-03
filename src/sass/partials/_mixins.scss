@@ -1,0 +1,30 @@
+@mixin google-font($font){
+    $font: unquote($font);
+    @import url(https://fonts/googleapis.com/css?family=#{$font});
+}
+
+@mixin basic-styles {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #efefef;
+    color: rgb(36, 36, 36);
+    font-family: Arial;
+    font-size: 12px;
+    font-weight: bold;    
+    margin: 4px;
+}
+  
+@mixin display-grid {
+    display: -ms-grid;
+    display: grid;
+}
+  
+@mixin grid-child ($col-start, $col-end, $row-start, $row-end) {
+    -ms-grid-column: $col-start;
+    -ms-grid-column-span: $col-end - $col-start;
+    -ms-grid-row: $row-start;
+    -ms-grid-row-span: $row-end - $row-start;
+    grid-column: #{$col-start}/#{$col-end};
+    grid-row: #{$row-start}/#{$row-end};
+}

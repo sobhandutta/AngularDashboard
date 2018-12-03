@@ -1,0 +1,127 @@
+<!--nav class="navbar navbar-default">
+  <div class="container-fluid">
+      <div class="navbar-header">
+          <a class="navbar-brand">
+            <img src="assets/img/ngx-bootstrap.svg" class="logo">
+          </a>
+          <span class="navbar-brand">Angular + Bootstrap</span>
+      </div>
+      <ul class="nav navbar-nav">
+          <li class="active"><a href="#">
+            Link <span class="sr-only">(current)</span>
+          </a></li>
+          <li><a href="#">Link</a></li>
+          <li class="dropdown" dropdown> 
+              <a dropdownToggle role="button">
+                Dropdown <span class="caret"></span></a>
+              <ul *dropdownMenu class="dropdown-menu"> 
+                  <li><a href="#">Action</a></li>
+                  <li><a href="#">Another action</a></li>
+                  <li><a href="#">Something else here</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">Separated link</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="#">One more separated link</a></li>
+              </ul>
+          </li>
+      </ul>
+  </div>
+</nav-->
+
+<!--button type="button" class="btn btn-primary" 
+      tooltip="Vivamus sagittis lacus vel augue laoreet rutrum faucibus.">
+Button with tooltip
+</button>
+
+<button type="button" class="btn btn-info" 
+      (click)="openModal(template)">Create template modal</button-->
+
+<!--ng-template #template>
+  <div class="modal-header">
+      <h4 class="modal-title pull-left">Modal</h4>
+      <button type="button" class="close pull-right" 
+              aria-label="Close" (click)="modalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  </div>
+  <div class="modal-body">
+      This is a modal.
+  </div>
+</ng-template-->
+<article class="drop-shadow">
+    <div class="chart-parent" id="style-3">
+        <div class="chart-child" *ngFor="let process of flowData"  (click)="gotoDetail(process.id, process.name)">
+            <div class="entry">
+                <div class="scanned"><span class="chart-counts">{{process.scanned | number}}</span> <br/>scanned<br/><img src="/assets/img/darrow.png"></div>
+                <div class="process" [ngClass]="{'entryhover': process.id===selected.id }">
+                        <span class="chart-counts">{{process.name | uppercase}}</span>
+                    <div class="queue"><span class="chart-counts redtext">{{process.queue | number}} ({{getInQueuePercent(process.queuePercent)}})</span> In Queue</div>
+                    <div class="graph" ><div class="inqueue" [ngStyle]="{'width':getInQueuePercent(process.queuePercent)}" ></div></div>
+                </div>
+            </div>
+            <div class="exit" *ngIf="process.next">
+                <div class="processed" ><span class="chart-counts">{{process.processed | number}} ({{process.processedPercent}}%)</span> <br/> proceeded to <br/> {{process.next}}</div>
+            </div>
+        </div>
+    </div>
+    Click on above flow to see details
+</article>
+    
+<!--article style="max-width:800px;margin:auto;">
+    <div class="grid-parent" >
+            <div class="grid-header" *ngFor="let process of flowData"  (click)="gotoDetail(process.name)">                
+                <div> Scanned: {{process.scanned}} </div>
+                <div>{{process.name | uppercase}}</div>
+                <div class="fallout">
+                    <div [ngStyle]="{'height':getProcessedPercent()}" > Processd: {{process.processed}}</div>
+                    <div [ngStyle]="{'height':getInQueuePercent()}"> In Queue: {{process.queue}}</div>
+                </div>
+            </div>
+    </div>
+</article-->
+
+<article *ngIf="showDetails ; else elseBlock">
+        <div class="grid-details-parent">
+            <div class="details-header">
+                <div class="strong"><h3>{{selected.process | uppercase}}</h3>                    
+                </div>
+            </div>
+            <div>
+                <div class="details">
+                    <div><a class="btn btn-danger"  href="#" ><i class="icon-off"></i>Shoutdown</a>
+                        <button type="button" class="btn btn-warning" ><i class="icon-star"></i>Kill</button></div>
+                </div>
+
+                <div class="grid-parent">
+                        <div class="grid-child border-box" *ngFor="let process of details.process">
+                            <div class="title"><h4>{{process.process | uppercase}}</h4></div>                                
+                            <div class="grid-kpi-parent">
+                                <div class="grid-child grey-kpi-box"><span class="chart-counts">{{process.scannedPs | number}}</span> <br> Scanned/s</div>
+                                <div class="grid-child grey-kpi-box"><span class="chart-counts">{{process.processedPs | number}}</span> <br> Processed/s</div>
+                                <div class="grid-child grey-kpi-box"><span class="chart-counts">{{process.scanned | number}}</span> <br> Scanned</div>
+                                <div class="grid-child grey-kpi-box"><span class="chart-counts">{{process.processed | number}}</span> <br> Processed</div>
+                                <div class="grid-child grey-kpi-box"><span class="chart-counts">{{process.queue | number}}</span> <br> In Queue</div>
+                            </div>
+                            <div class="title">Running on Servers:</div>                            
+                            <div class="grid-parent" *ngFor="let server of process.servers" >
+                                <span class="grey-kpi-box"><img src="/assets/img/{{getServerRole(server.role)}}.png"/>{{server.server | uppercase}}</span> 
+                                <span class="grey-kpi-box {{server.pstatus}}">{{server.pstatus | uppercase}}</span> 
+                                <a class="grey-kpi-box">View Log</a> </div>
+                        </div>
+                </div>
+            </div>
+            <div class="details-header">
+                <div class="strong"><h3>Process In Last 24 Hours</h3>                    
+                </div>
+            </div>
+            <div class="details-trend">
+                <app-barchart *ngIf="chartData" [data]="chartData"></app-barchart>
+                <!--span *ngFor="let dp of details.trend">[{{dp.time}}: 
+                    {{dp.scanned}} | {{dp.processed}} | {{dp.queue}}] </span-->
+            </div>
+        </div>
+    </article>
+
+
+<!--button (click)="sendMsg()">Restart</button-->
+

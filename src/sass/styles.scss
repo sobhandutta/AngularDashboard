@@ -1,0 +1,7 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'partials/variables';
+@import 'partials/mixins';
+//'~sass/artials/mixins';
+
+@include google-font("Alegreya+Sans");
+@include google-font("Titillium+Web");
